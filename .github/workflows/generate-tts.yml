@@ -1,0 +1,32 @@
+name: Generate TTS Pantun
+
+# Trigger workflow manual dari web
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install Dependencies
+      run: |
+        pip install gTTS
+
+    - name: Run TTS Script
+      run: |
+        python3 tts_pantun.py
+
+    - name: Upload MP3 Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: tts-audio
+        path: pantun/*.mp3
